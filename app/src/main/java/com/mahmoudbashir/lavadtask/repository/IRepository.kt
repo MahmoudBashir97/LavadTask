@@ -4,5 +4,5 @@ import com.mahmoudbashir.lavadtask.pojo.NewsResponse
 import retrofit2.Response
 
 interface IRepository {
-    suspend fun getBreakingNews():Response<NewsResponse>
+    suspend fun getBreakingNews(pageNo:Int):Response<NewsResponse>
 }
