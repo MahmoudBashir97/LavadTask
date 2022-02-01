@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:name=".MyApp"
-        android:theme="@style/Theme.NewsAppLavadTask">
+        android:theme="@style/Theme.NewsAppLavadTask"
+        >
         <activity
             android:name=".ui.MainActivity"
             android:exported="true">
