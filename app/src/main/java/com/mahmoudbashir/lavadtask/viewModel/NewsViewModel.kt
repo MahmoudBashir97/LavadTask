@@ -8,7 +8,6 @@ import android.os.Build
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mahmoudbashir.lavadtask.MyApp
 import com.mahmoudbashir.lavadtask.pojo.Article
@@ -36,6 +35,11 @@ class NewsViewModel(val app : Application,val repo : NewsRepository): AndroidVie
     private fun handleBreakingNewsResponse(response: Response<NewsResponse>):Resource<NewsResponse>{
         if(response.isSuccessful){
             response.body()?.let {resultResponse ->
+                resultResponse.articles.forEach{
+                    Log.d("idResults : "," id: ${it.title}")
+
+                }
+
                 breakinNewsPage++
                 if (breakingNewsResponse == null)
                 {

@@ -9,5 +9,18 @@
         android:id="@+id/homeNewsFragment"
         android:name="com.mahmoudbashir.lavadtask.fragments.HomeNewsFragment"
         android:label="fragment_home_news"
-        tools:layout="@layout/fragment_home_news" />
+        tools:layout="@layout/fragment_home_news" >
+        <action
+            android:id="@+id/action_homeNewsFragment_to_detailsNewsFragment"
+            app:destination="@id/detailsNewsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsNewsFragment"
+        android:name="com.mahmoudbashir.lavadtask.fragments.DetailsNewsFragment"
+        android:label="fragment_details_news"
+        tools:layout="@layout/fragment_details_news" />
 </navigation>
