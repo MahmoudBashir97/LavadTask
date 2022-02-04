@@ -1,5 +1,6 @@
 package com.mahmoudbashir.lavadtask.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -24,29 +25,31 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class HomeNewsFragment : Fragment(R.layout.fragment_home_news) ,NewsFeedAdapter.OnItemClickedInterface{
+class HomeNewsFragment : Fragment(R.layout.fragment_home_news){
 
     private var _binding : FragmentHomeNewsBinding?=null
     private val homeBinding get() = _binding!!
 
 
     lateinit var viewModel: NewsViewModel
-    lateinit var newsAdapter : NewsFeedAdapter
     lateinit var newsEpoxyController: NewsFeedEpoxyController
     lateinit var mlist:List<Article>
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        //Here we do initializing for ViewModel
+        viewModel = (activity as MainActivity).viewModel
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         _binding = FragmentHomeNewsBinding.inflate(inflater,container,false)
-
-
-        //Here we do initializing for ViewModel
-        viewModel = (activity as MainActivity).viewModel
-
-
         return homeBinding.root
     }
 
@@ -54,20 +57,19 @@ class HomeNewsFragment : Fragment(R.layout.fragment_home_news) ,NewsFeedAdapter.
         super.onViewCreated(view, savedInstanceState)
 
 
-
-
         setUpEpoxyRecyclerView()
-//        setUpRecyclerView()
         getNewsFeedArticles()
 
     }
 
 
+    //todo in this fun. we setup EpoxyRecyclerview and EpoxyController ,,,
+    // also you can see how is it easy to navigate to another screen fragment with EpoxyController and NavController
     private fun setUpEpoxyRecyclerView() {
         mlist = ArrayList()
 
         newsEpoxyController = NewsFeedEpoxyController((activity as MainActivity)) { article ->
-            findNavController().navigate(HomeNewsFragmentDirections.actionHomeNewsFragmentToDetailsNewsFragment())
+            findNavController().navigate(HomeNewsFragmentDirections.actionHomeNewsFragmentToDetailsNewsFragment(article))
         }
 
         homeBinding.recNewsFeed.apply {
@@ -78,8 +80,9 @@ class HomeNewsFragment : Fragment(R.layout.fragment_home_news) ,NewsFeedAdapter.
         }
     }
 
+    //todo here we get data from api(endpoints) by using ViewModel and observe on this data
+    // , then pass it to list and epoxyController
     private fun getNewsFeedArticles() {
-        //homeBinding.isLoading = true
         newsEpoxyController.isLoading = true
 
         viewModel.breakingNews.observe(viewLifecycleOwner,{
@@ -89,7 +92,6 @@ class HomeNewsFragment : Fragment(R.layout.fragment_home_news) ,NewsFeedAdapter.
                     result.data?.let {
                         newsResponse->
                         hideProgressBar()
-                       // newsAdapter.differ.submitList(newsResponse.articles)
 
                         mlist = newsResponse.articles
                         Log.d("idResults : "," id: ${mlist.size}")
@@ -120,41 +122,34 @@ class HomeNewsFragment : Fragment(R.layout.fragment_home_news) ,NewsFeedAdapter.
         })
     }
 
+
+    //todo this fun. to hide progress bar after data is already loaded and added to list , attached to views
     private fun hideProgressBar(){
         homeBinding.paginationProgressBar.visibility = View.INVISIBLE
         isLoading = false
         newsEpoxyController.isLoading = false
 
     }
+    //todo this fun. to show progress bar when data is loading before attach it to views
     private fun showProgressBar(){
         homeBinding.paginationProgressBar.visibility = View.VISIBLE
         isLoading = true
         newsEpoxyController.isLoading =true
     }
 
+    // todo this fun. only to show message toast if error happens
     private fun showToastMessage(message: String) {
         Toast.makeText(activity,"Error Occured: $message",Toast.LENGTH_SHORT).show()
-
     }
 
-    private fun setUpRecyclerView() {
-        newsAdapter = NewsFeedAdapter(this)
-        homeBinding.recNewsFeed.apply {
-            setHasFixedSize(true)
-            adapter = newsAdapter
-            layoutManager = LinearLayoutManager(activity)
-            addOnScrollListener(this@HomeNewsFragment.scrollListener)
-        }
-    }
-
-    override fun onClickItem(position: Int, article: Article) {
-       findNavController().navigate(HomeNewsFragmentDirections.actionHomeNewsFragmentToDetailsNewsFragment())
-    }
 
     var isLoading = false
     var isLastPage = false
     var isScrolling = false
 
+    //todo we do addOnScrollListener so we can listen scrolling on
+    // RecyclerView to load new data to be viewed on Screen (add more)
+    // applying Pagination with number of pages
     val scrollListener = object : RecyclerView.OnScrollListener(){
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
             super.onScrollStateChanged(recyclerView, newState)
@@ -185,6 +180,5 @@ class HomeNewsFragment : Fragment(R.layout.fragment_home_news) ,NewsFeedAdapter.
             }
         }
     }
-
 
 }

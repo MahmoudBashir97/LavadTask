@@ -10,6 +10,7 @@ class MyApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        // todo as its name we start Koin and pass a context , modules to its
         startKoin {
             androidContext(this@MyApp)
             modules(

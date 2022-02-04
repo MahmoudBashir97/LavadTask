@@ -7,6 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiServiceInterface {
+    //todo here we use GET() for requesting data from api server and receive it , passing (country , page, apiKey)
     @GET("v2/top-headlines")
     suspend fun getBreakingNews(
         @Query("country")

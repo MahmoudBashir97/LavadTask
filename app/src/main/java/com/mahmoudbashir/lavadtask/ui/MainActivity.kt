@@ -8,6 +8,7 @@ import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
+    //todo initialize viewModel using koin (by inject ) to MainActivity
     val viewModel  by inject<NewsViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {

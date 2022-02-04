@@ -8,6 +8,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val newsApi = module {
+
     single { RetrofitInstance() }
     single { NewsRepository(get()) }
 

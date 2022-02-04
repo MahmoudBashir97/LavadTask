@@ -22,5 +22,11 @@
         android:id="@+id/detailsNewsFragment"
         android:name="com.mahmoudbashir.lavadtask.fragments.DetailsNewsFragment"
         android:label="fragment_details_news"
-        tools:layout="@layout/fragment_details_news" />
+        tools:layout="@layout/fragment_details_news" >
+        <argument
+            android:name="article_details"
+            app:argType="com.mahmoudbashir.lavadtask.pojo.Article"
+            app:nullable="false"
+            />
+    </fragment>
 </navigation>

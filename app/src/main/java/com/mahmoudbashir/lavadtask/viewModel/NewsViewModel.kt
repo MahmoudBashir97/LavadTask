@@ -32,6 +32,11 @@ class NewsViewModel(val app : Application,val repo : NewsRepository): AndroidVie
     }
 
 
+    //todo here we receive response data coming from api
+    // , increase number of page with one each data request
+    // , pass old and new articles to its objects and to MutableList<Article>
+    // , return success message (response with Resource class Success Method that carries data (News Response)
+    // applying Pagination with number of pages
     private fun handleBreakingNewsResponse(response: Response<NewsResponse>):Resource<NewsResponse>{
         if(response.isSuccessful){
             response.body()?.let {resultResponse ->
@@ -54,6 +59,9 @@ class NewsViewModel(val app : Application,val repo : NewsRepository): AndroidVie
         return Resource.Error(response.message())
     }
 
+    // todo here we get breaking News (News Feed) by using repository object
+    //  , pass received data to mutableLiveData (breakingNews)
+    //  , check internet connection so can show no connection message other or exception message with Resource class (Error Method)
     fun getBreakingNews() = viewModelScope.launch {
         breakingNews.postValue(Resource.Loading())
 
@@ -73,6 +81,8 @@ class NewsViewModel(val app : Application,val repo : NewsRepository): AndroidVie
     }
 
 
+    // todo here we handle internet connection ,
+    //  so if there is no connection will show a toast with no Internet Connection
     private fun hasInternetConnection():Boolean{
         val connectivityManager = getApplication<MyApp>().getSystemService(
             Context.CONNECTIVITY_SERVICE
