@@ -15,6 +15,7 @@ data class EpoxyModelItem(
     override fun SingleItemLayoutBinding.bind() {
 
 
+        // add data to views
         tvArticleTitle.text = article.title
         tvArticleDesc.text = article.description
         tvArticleDate.text = article.publishedAt

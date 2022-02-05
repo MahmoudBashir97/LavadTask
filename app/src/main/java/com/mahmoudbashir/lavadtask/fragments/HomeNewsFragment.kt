@@ -13,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mahmoudbashir.lavadtask.R
-import com.mahmoudbashir.lavadtask.adapters.NewsFeedAdapter
 import com.mahmoudbashir.lavadtask.databinding.FragmentHomeNewsBinding
 import com.mahmoudbashir.lavadtask.epoxyModel.NewsFeedEpoxyController
 import com.mahmoudbashir.lavadtask.pojo.Article

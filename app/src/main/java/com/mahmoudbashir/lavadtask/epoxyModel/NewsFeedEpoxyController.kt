@@ -18,6 +18,7 @@ class NewsFeedEpoxyController (val context: Context,private val onClickedCallbac
         }
     }*/
 
+    //todo is a list of articles
     var articlesList:List<Article> = ArrayList()
 
     set(value) {
@@ -37,6 +38,7 @@ class NewsFeedEpoxyController (val context: Context,private val onClickedCallbac
             return
         }
 
+        //todo fetching article list and pass all its data to EpoxyModelItem to be attached to views
         articlesList.forEach { article ->
             EpoxyModelItem(context,article,onClickedCallback).id(article.title).addTo(this)
         }

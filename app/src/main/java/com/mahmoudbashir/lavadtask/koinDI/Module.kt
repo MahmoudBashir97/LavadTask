@@ -9,6 +9,7 @@ import org.koin.dsl.module
 
 val newsApi = module {
 
+    //do Singleton initialize with koin
     single { RetrofitInstance() }
     single { NewsRepository(get()) }
 
