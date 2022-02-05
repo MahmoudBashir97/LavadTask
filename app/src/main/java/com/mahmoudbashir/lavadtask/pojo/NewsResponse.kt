@@ -1,6 +1,7 @@
 package com.mahmoudbashir.lavadtask.pojo
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class NewsResponse(
     @SerializedName("articles")
@@ -9,4 +10,4 @@ data class NewsResponse(
     val status: String,
     @SerializedName("totalResults")
     val totalResults: Int
-)
+):Serializable
